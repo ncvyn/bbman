@@ -13,7 +13,7 @@ FetchContent_Declare(httplib
 )
 FetchContent_MakeAvailable(httplib)
 
-add_executable(bbman src/main.cpp)
+add_executable(bbman src/main.cpp src/eoutln.cpp)
 
 target_compile_definitions(bbman PRIVATE CPPHTTPLIB_OPENSSL_SUPPORT)
 
