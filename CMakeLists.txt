@@ -13,6 +13,12 @@ FetchContent_Declare(httplib
 )
 FetchContent_MakeAvailable(httplib)
 
+FetchContent_Declare(tinyxml2
+    GIT_REPOSITORY https://github.com/leethomason/tinyxml2
+    GIT_TAG        master
+)
+FetchContent_MakeAvailable(tinyxml2)
+
 add_executable(bbman src/main.cpp src/eoutln.cpp)
 
 target_compile_definitions(bbman PRIVATE CPPHTTPLIB_OPENSSL_SUPPORT)
@@ -20,4 +26,5 @@ target_compile_definitions(bbman PRIVATE CPPHTTPLIB_OPENSSL_SUPPORT)
 target_link_libraries(bbman PRIVATE
     httplib::httplib
     OpenSSL::SSL
+    tinyxml2::tinyxml2
 )
