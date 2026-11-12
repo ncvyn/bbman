@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <httplib.h>
 #include <iostream>
+#include <tinyxml2.h>
 
 int main() {
     // The feed identifier, obtained from https://kill-the-newsletter.com.
@@ -19,7 +20,27 @@ int main() {
         return eoutln("status code " + std::to_string(res->status));
     }
 
-    std::cout << res->body << std::endl;
+    tinyxml2::XMLDocument doc;
+    tinyxml2::XMLError xmlError = doc.Parse(res->body.c_str());
+    if (xmlError != tinyxml2::XML_SUCCESS) {
+        return eoutln(tinyxml2::XMLDocument::ErrorIDToName(xmlError));
+    }
+
+    tinyxml2::XMLElement* entry =
+        doc.FirstChildElement("feed")->FirstChildElement("entry");
+    if (!entry) {
+        return eoutln("no entries found");
+    }
+
+    while (entry) {
+        const tinyxml2::XMLText* html =
+            entry->FirstChildElement("content")->FirstChild()->ToText();
+        if (!html) {
+            return eoutln("weirdly enough, no content in entry");
+        }
+        std::cout << html->Value() << std::endl;
+        entry = entry->NextSiblingElement("entry");
+    }
 
     return 0;
 }
