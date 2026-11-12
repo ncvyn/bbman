@@ -15,7 +15,7 @@ int main() {
         return eoutln(httplib::to_string(res.error()));
     }
     if (res->status != 200) {
-        return eoutln("error! status code " + std::to_string(res->status));
+        return eoutln("status code " + std::to_string(res->status));
     }
 
     std::cout << res->body << std::endl;
