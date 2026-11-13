@@ -32,6 +32,8 @@ int main() {
         return eoutln("no entries found");
     }
 
+    int entryCount = 0;
+
     while (entry) {
         const tinyxml2::XMLText* titleElement =
             entry->FirstChildElement("title")->FirstChild()->ToText();
@@ -53,8 +55,13 @@ int main() {
 
         const std::string content = std::string(contentElement->Value());
         std::cout << content << std::endl;
+
+        entryCount++;
         entry = entry->NextSiblingElement("entry");
     }
+
+    std::cout << "Found " << entryCount
+              << (entryCount == 1 ? " entry" : " entries") << std::endl;
 
     return 0;
 }
