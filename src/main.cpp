@@ -33,6 +33,18 @@ int main() {
     }
 
     while (entry) {
+        const tinyxml2::XMLText* titleElement =
+            entry->FirstChildElement("title")->FirstChild()->ToText();
+        if (!titleElement) {
+            return eoutln("weirdly enough, no title in entry");
+        }
+
+        const std::string title = std::string(titleElement->Value());
+        if (title.find("due soon") == std::string::npos ||
+            title.find("New Assignment") == std::string::npos) {
+            continue;
+        }
+
         const tinyxml2::XMLText* html =
             entry->FirstChildElement("content")->FirstChild()->ToText();
         if (!html) {
