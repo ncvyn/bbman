@@ -45,12 +45,14 @@ int main() {
             continue;
         }
 
-        const tinyxml2::XMLText* html =
+        const tinyxml2::XMLText* contentElement =
             entry->FirstChildElement("content")->FirstChild()->ToText();
-        if (!html) {
+        if (!contentElement) {
             return eoutln("weirdly enough, no content in entry");
         }
-        std::cout << html->Value() << std::endl;
+
+        const std::string content = std::string(contentElement->Value());
+        std::cout << content << std::endl;
         entry = entry->NextSiblingElement("entry");
     }
 
