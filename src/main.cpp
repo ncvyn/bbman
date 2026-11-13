@@ -42,8 +42,9 @@ int main() {
         }
 
         const std::string title = std::string(titleElement->Value());
-        if (title.find("due soon") == std::string::npos ||
-            title.find("New Assignment") == std::string::npos) {
+        if (!(title.find("due soon") == std::string::npos &&
+              title.find("New Assignment") == std::string::npos)) {
+            entry = entry->NextSiblingElement("entry");
             continue;
         }
 
